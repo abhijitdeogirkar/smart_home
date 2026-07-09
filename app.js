@@ -1,5 +1,5 @@
 // सिस्टीमचे मुख्य ग्लोबल स्टेट्स (Global Session States)
-let states = {
+var states = {
     ug_pump: false, 
     bw1_pump: false, 
     bw2_pump: false,
@@ -13,6 +13,12 @@ let states = {
 
 // डॅशबोर्ड पूर्ण लोड झाल्यावर सर्व यंत्रणा सुरू करणे
 window.onload = function() {
-    initPanchang();
-    updateWaterFlowLogic();
+    // पंचांग फाईलमधील फंक्शन
+    if (typeof initPanchang === "function") {
+        initPanchang();
+    }
+    // वॉटर फाईलमधील फंक्शन
+    if (typeof updateWaterFlowLogic === "function") {
+        updateWaterFlowLogic();
+    }
 };
