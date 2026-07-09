@@ -3,160 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>अभिप्राजामेयार्णव स्मार्ट होम</title>
-    
-    <style>
-        /* बेसिक सेटिंग्ज */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body { background-color: #f4f7f6; color: #333; }
-        header { background-color: #2c3e50; color: white; text-align: center; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        
-        /* डॅशबोर्ड ग्रीड */
-        .dashboard-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
-        .card { background-color: white; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
-        .card h2 { font-size: 1.2rem; color: #2980b9; margin-bottom: 15px; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; }
-        
-        /* --- पाण्याची टाकी ॲनिमेशन --- */
-        .tank-container {
-            width: 120px;
-            height: 180px;
-            border: 4px solid #34495e;
-            border-radius: 10px;
-            margin: 20px auto;
-            position: relative;
-            background-color: #ecf0f1;
-            overflow: hidden;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
-        }
-        
-        /* भूमिगत टाकीसाठी थोडा वेगळा रंग (तपकिरी बॉर्डर) */
-        .underground-tank { border-color: #8d6e63; }
-
-        .water-fill {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background: linear-gradient(to bottom, #3498db, #2980b9);
-            transition: height 1.5s ease-in-out;
-            box-shadow: 0 -5px 15px rgba(52, 152, 219, 0.7);
-        }
-
-        .water-level-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-            z-index: 2;
-        }
-
-        /* --- पंप आणि कंट्रोल स्विचेस --- */
-        .pump-control {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #f8f9fa;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border-left: 4px solid #3498db;
-        }
-        .pump-title { font-weight: bold; font-size: 0.95rem; text-align: left; }
-        .status-badge { background: #e74c3c; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; }
-        
-        .btn { background-color: #27ae60; color: white; border: none; padding: 8px 15px; font-size: 0.9rem; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .btn:hover { background-color: #2ecc71; }
-        .btn-red { background-color: #e74c3c; }
-        
-        /* --- सोलर ॲनिमेशन --- */
-        .solar-icon {
-            font-size: 5rem;
-            margin: 10px 0;
-            display: inline-block;
-            animation: spinSun 12s linear infinite, glowSun 2s alternate infinite;
-        }
-        @keyframes spinSun { 100% { transform: rotate(360deg); } }
-        @keyframes glowSun {
-            0% { text-shadow: 0 0 10px #f1c40f; color: #f1c40f; }
-            100% { text-shadow: 0 0 30px #e67e22, 0 0 50px #e74c3c; color: #f39c12; }
-        }
-        .solar-text { font-size: 2.2rem; font-weight: bold; color: #d35400; margin-top: 10px; }
-
-        .cctv-placeholder { background-color: #ecf0f1; height: 150px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #7f8c8d; margin-top: 10px; }
-    </style>
+    <title>अभिप्राजामेयार्णव स्मार्ट Home</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>अभिप्राजामेयार्णव स्मार्ट होम</h1>
-    </header>
-    <main class="dashboard-container">
+
+    <div id="mainBanner" class="normal-banner">
+        <h2 id="bannerTitle" style="margin: 0; font-weight: 800; letter-spacing: 1px;">अभिप्राजामेयार्णव</h2>
+        <h4 id="bannerSub" style="color: #81d4fa; margin: 3px 0 0 0; font-weight: 500;">पाणी, ऊर्जा व सुरक्षा व्यवस्थापन प्रणाली</h4>
+    </div>
+
+    <div class="panchang-card">
+        <div id="panchangLiveText">तारीख: लोड होत आहे... | वार: -- | तिथी: -- | सण: तपासत आहे...</div>
+        <span style="font-size: 18px;">📅</span>
+    </div>
+
+    <div class="main-layout">
         
-        <div class="card">
-            <h2>⬇️ भूमिगत टाकी (Underground)</h2>
-            <div class="tank-container underground-tank">
-                <div class="water-fill" style="height: 60%;"></div>
-                <div class="water-level-text">60%</div>
+        <div class="left-panel">
+            <div class="card" style="padding-bottom: 25px;">
+                <h2 style="color: #2980b9;">💧 लाईव्ह वॉटर डॅशबोर्ड</h2>
+                
+                <div class="tanks-grid-top">
+                    <div class="tank-wrapper" style="max-width: 224px;">
+                        <div class="tank-box" style="height: 220px;">
+                            <div class="pipe-label">Main Line</div>
+                            <div class="pipe-inlet"><div id="stream_t1" class="water-pour-stream" style="height: 220px;"></div></div>
+                            <div id="tank_t1" class="water-fill" style="height: 85%;">
+                                <div id="wave_t1" class="wave-static"></div>
+                                <span id="text_t1" class="tank-text">1,700 L<br><span style='font-size:12px;'>(85%)</span></span>
+                            </div>
+                        </div>
+                        <div class="tank-name-tag">वरच्या मजल्या करिता</div>
+                    </div>
+
+                    <div class="tank-wrapper" style="max-width: 336px;">
+                        <div class="tank-box" style="height: 220px;">
+                            <div class="pipe-label">Main Line</div>
+                            <div class="pipe-inlet"><div id="stream_t2" class="water-pour-stream" style="height: 220px;"></div></div>
+                            <div id="tank_t2" class="water-fill" style="height: 60%;">
+                                <div id="wave_t2" class="wave-static"></div>
+                                <span id="text_t2" class="tank-text">2,400 L<br><span style='font-size:12px;'>(60%)</span></span>
+                            </div>
+                        </div>
+                        <div class="tank-name-tag">तळमजल्या करिता</div>
+                    </div>
+                </div>
+
+                <div class="tanks-grid-bottom">
+                    <div class="tank-wrapper" style="max-width: 280px; margin-top: 35px;">
+                        <div class="tank-box" style="height: 160px; border-color: #8d6e63;">
+                            <div class="pipe-label" style="left: 35%;">Borewell</div>
+                            <div class="pipe-inlet" style="left: 35%;"><div id="stream_ug_bw" class="water-pour-stream" style="height: 160px;"></div></div>
+                            <div class="pipe-label" style="left: 65%;">Tanker</div>
+                            <div class="pipe-inlet" style="left: 65%;"><div id="stream_ug_tk" class="water-pour-stream" style="height: 160px;"></div></div>
+                            <div id="tank_ug" class="water-fill ug-water" style="height: 75%;">
+                                <div id="wave_ug" class="wave-static" style="background-color: #023e8a;"></div>
+                                <span id="text_ug" class="tank-text">6,000 L<br><span style='font-size:12px;'>(75%)</span></span>
+                            </div>
+                        </div>
+                        <div class="tank-name-tag">भूमिगत टाकी</div>
+                    </div>
+
+                    <div class="tank-wrapper" style="max-width: 280px; margin-top: 35px;">
+                        <div class="garden-box" style="height: 160px;">
+                            <div id="stream_garden" class="water-pour-stream" style="top: -30px; height: 40px;"></div>
+                            <div style='font-size: 40px;'>🌳🏡🌿</div>
+                            <h4 style='color: #2e7d32; margin-top: 5px; font-size: 14px;'>गार्डन / झाडे</h4>
+                            <p style='font-size: 10px; color: #555;'>भूमिगत टाकीतून</p>
+                        </div>
+                        <div class="tank-name-tag">गार्डन / झाडे</div>
+                    </div>
+                </div>
+
+                <div class="control-block-wrapper">
+                    <div class="card" style="margin:0; background:#fefefe; border:1px solid #ddd;">
+                        <div class="panel-header-dark">⚡ स्टार्टर पॅनल</div>
+                        <div class="control-sub-grid">
+                            <div class="starter-box">
+                                <div class="starter-title">UG PUMP</div>
+                                <div class="indicator-lights">
+                                    <div id="light_ug_on" class="light on">ON</div>
+                                    <div id="light_ug_off" class="light off active">OFF</div>
+                                </div>
+                                <div class="starter-btns">
+                                    <button onclick="togglePump('ug', true)" style="background:#2ecc71; color:white;">ON</button>
+                                    <button onclick="togglePump('ug', false)" style="background:#e74c3c; color:white;">OFF</button>
+                                </div>
+                            </div>
+                            <div class="starter-box">
+                                <div class="starter-title">BW-1</div>
+                                <div class="indicator-lights">
+                                    <div id="light_bw1_on" class="light on">ON</div>
+                                    <div id="light_bw1_off" class="light off active">OFF</div>
+                                </div>
+                                <div class="starter-btns">
+                                    <button onclick="togglePump('bw1', true)" style="background:#2ecc71; color:white;">ON</button>
+                                    <button onclick="togglePump('bw1', false)" style="background:#e74c3c; color:white;">OFF</button>
+                                </div>
+                            </div>
+                            <div class="starter-box">
+                                <div class="starter-title">BW-2</div>
+                                <div class="indicator-lights">
+                                    <div id="light_bw2_on" class="light on">ON</div>
+                                    <div id="light_bw2_off" class="light off active">OFF</div>
+                                </div>
+                                <div class="starter-btns">
+                                    <button onclick="togglePump('bw2', true)" style="background:#2ecc71; color:white;">ON</button>
+                                    <button onclick="togglePump('bw2', false)" style="background:#e74c3c; color:white;">OFF</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin:0; background:#fefefe; border:1px solid #ddd;">
+                        <div class="panel-header-green">🎛️ वाल्व्ह स्थिती</div>
+                        <div class="control-sub-grid">
+                            <div class="valve-box" onclick="toggleValve('t1')">
+                                <div class="valve-title">V1 (T1)</div>
+                                <svg class="valve-svg" viewBox="0 0 60 90"><rect x="22" y="0" width="16" height="90" fill="#95a5a6" /><polygon points="15,25 45,25 50,45 45,65 15,65 10,45" fill="#bdc3c7" stroke="#7f8c8d"/><rect x="18" y="20" width="24" height="50" fill="#ecf0f1" rx="2"/><g id="handle_t1" class="valve-handle"><path d="M 35 40 L 5 40 C 2 40 0 42 0 45 C 0 48 2 50 5 50 L 35 50 Z" fill="#e74c3c" /><circle cx="30" cy="45" r="6" fill="#ecf0f1"/><circle cx="30" cy="45" r="2.5" fill="#7f8c8d" /></g></svg>
+                                <div id="status_t1" class="valve-status">OFF</div>
+                            </div>
+                            <div class="valve-box" onclick="toggleValve('t2')">
+                                <div class="valve-title">V2 (T2)</div>
+                                <svg class="valve-svg" viewBox="0 0 60 90"><rect x="22" y="0" width="16" height="90" fill="#95a5a6" /><polygon points="15,25 45,25 50,45 45,65 15,65 10,45" fill="#bdc3c7" stroke="#7f8c8d"/><rect x="18" y="20" width="24" height="50" fill="#ecf0f1" rx="2"/><g id="handle_t2" class="valve-handle"><path d="M 35 40 L 5 40 C 2 40 0 42 0 45 C 0 48 2 50 5 50 L 35 50 Z" fill="#e74c3c" /><circle cx="30" cy="45" r="6" fill="#ecf0f1"/><circle cx="30" cy="45" r="2.5" fill="#7f8c8d" /></g></svg>
+                                <div id="status_t2" class="valve-status">OFF</div>
+                            </div>
+                            <div class="valve-box" onclick="toggleValve('ug')">
+                                <div class="valve-title">V3 (UG)</div>
+                                <svg class="valve-svg" viewBox="0 0 60 90"><rect x="22" y="0" width="16" height="90" fill="#95a5a6" /><polygon points="15,25 45,25 50,45 45,65 15,65 10,45" fill="#bdc3c7" stroke="#7f8c8d"/><rect x="18" y="20" width="24" height="50" fill="#ecf0f1" rx="2"/><g id="handle_ug" class="valve-handle"><path d="M 35 40 L 5 40 C 2 40 0 42 0 45 C 0 48 2 50 5 50 L 35 50 Z" fill="#e74c3c" /><circle cx="30" cy="45" r="6" fill="#ecf0f1"/><circle cx="30" cy="45" r="2.5" fill="#7f8c8d" /></g></svg>
+                                <div id="status_ug" class="valve-status">OFF</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <p>स्रोत: बोरवेल / टँकर</p>
         </div>
 
-        <div class="card">
-            <h2>⬆️ वरची टाकी १</h2>
-            <div class="tank-container">
-                <div class="water-fill" style="height: 85%;"></div>
-                <div class="water-level-text">85%</div>
+        <div class="right-panel">
+            <div class="card solar-card">
+                <h5 style="color: #f57f17; border-bottom-color: #fff59d;">☀️ सोलर ऊर्जा (Sofar Inverter)</h5>
+                <div style="display: flex; justify-content: space-around; align-items: center; margin: 10px 0;">
+                    <div style="text-align: center;"><div style="font-size: 12px; color: #666;">सध्याची निर्मिती</div><div style="font-size: 18px; font-weight: bold; color: #2e7d32;">3.45 kW</div></div>
+                    <div style="text-align: center;"><div style="font-size: 12px; color: #666;">आजची निर्मिती</div><div style="font-size: 18px; font-weight: bold; color: #1565c0;">14.20 kWh</div></div>
+                </div>
+                <div class="solar-flow-container">
+                    <div style="text-align: center; font-size: 11px; font-weight: bold;">Panels</div>
+                    <div id="solar_line1" class="flow-line active"></div>
+                    <div style="font-size: 20px;">🎛️</div>
+                    <div id="solar_line2" class="flow-line active"></div>
+                    <div style="text-align: center; font-size: 11px; font-weight: bold;">Grid</div>
+                </div>
+                <div style="font-size: 12px; font-weight: bold; color: #2e7d32; margin-top: 8px; text-align: center;">🟢 सौर ऊर्जेची निर्मिती सुरू आहे (Live)</div>
             </div>
-            <p>मुख्य मोटर स्टेटस: <span class="status-badge">बंद</span></p>
-        </div>
 
-        <div class="card">
-            <h2>⬆️ वरची टाकी २</h2>
-            <div class="tank-container">
-                <div class="water-fill" style="height: 40%;"></div>
-                <div class="water-level-text">40%</div>
+            <div class="card">
+                <h5 style="color: #c2185b;">🛡️ सुरक्षा प्रणाली</h5>
+                <div style="display: flex; justify-content: space-between; align-items: center; background:#f9f9f9; padding:10px; border-radius:6px;">
+                    <label style="font-weight: bold; font-size: 14px; cursor: pointer;">
+                        <input type="checkbox" id="alarmToggle" onchange="triggerSecurityAlarm()"> 🚨 अलार्म सिस्टीम (Arm)
+                    </label>
+                    <span style="font-size: 12px; font-weight: bold; color:#7f8c8d;">CCTV Active</span>
+                </div>
             </div>
-            <p>मुख्य मोटर स्टेटस: <span class="status-badge">बंद</span></p>
-        </div>
 
-        <div class="card" style="grid-column: span 1;">
-            <h2>🚰 पंप आणि सिंचन नियंत्रण</h2>
-            
-            <div class="pump-control">
-                <div class="pump-title">बोरवेल पंप<br><small>भूमिगत टाकी भरण्यासाठी</small></div>
-                <button class="btn btn-red">सुरू करा</button>
-            </div>
-            
-            <div class="pump-control">
-                <div class="pump-title">मुख्य मोटर<br><small>वरच्या टाक्या भरण्यासाठी</small></div>
-                <button class="btn btn-red">सुरू करा</button>
-            </div>
-            
-            <div class="pump-control">
-                <div class="pump-title">गार्डन स्प्रिंकलर<br><small>बागेसाठी पाणी</small></div>
-                <button class="btn btn-red">सुरू करा</button>
+            <div class="card" style="background: #fafafa; border: 1px dashed #bbb;">
+                <h5 style="color: #e67e22;">⚙️ सिस्टिम सिम्युलेटर (सिम्युलेशन टेस्ट)</h5>
+                <label style="display:block; margin-bottom:8px; font-size:13px; font-weight:bold;">
+                    <input type="checkbox" id="simTanker" onchange="updateWaterFlowLogic()"> 🚚 टँकरचे पाणी सुरू करा
+                </label>
+                <label style="display:block; font-size:13px; font-weight:bold; color:#c2185b;">
+                    <input type="checkbox" id="simMotion" onchange="triggerSecurityAlarm()"> 🚶 हालचाल सिम्युलेट करा (Intruder Test)
+                </label>
             </div>
         </div>
+    </div>
 
-        <div class="card">
-            <h2>☀️ सोलर जनरेशन</h2>
-            <div class="solar-icon">☀️</div>
-            <p>आजची ऊर्जा:</p>
-            <div class="solar-text">14.2 kWh</div>
-        </div>
+    <audio id="sirenAudio" src="https://upload.wikimedia.org/wikipedia/commons/4/40/Siren_Noise.ogg" loop></audio>
 
-        <div class="card">
-            <h2>📅 आजचे पंचांग</h2>
-            <p style="margin-top:20px; font-weight:bold; color:#2c3e50;">माहिती लोड होत आहे...</p>
-        </div>
-
-        <div class="card">
-            <h2>📷 सीसीटीव्ही (CCTV)</h2>
-            <div class="cctv-placeholder"><p>कॅमेरा फीड येथे दिसेल</p></div>
-        </div>
-
-    </main>
+    <script src="panchang.js"></script>
+    <script src="water.js"></script>
+    <script src="security.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
