@@ -1,45 +1,88 @@
+/* =========================================================================
+   ✨ अभिप्राजामेयार्णव स्मार्ट होम - संपूर्ण फायनल CSS (Premium Modular Design)
+   ========================================================================= */
+
 /* ---------------------------------------------------------
-   ✨ प्रोफेशनल स्मार्ट होम UI (Premium Modern Design)
+   🚀 १. सिस्टीमचे मुख्य ॲनिमेशन इंजिन (Core Keyframes)
    --------------------------------------------------------- */
-@keyframes waterPour { 0% { background-position: 0 0px; } 100% { background-position: 0 16px; } }
-@keyframes waveMove { 0% { background-position-x: 0px; } 100% { background-position-x: 40px; } }
+/* पाण्याचा वास्तववादी चमकदार प्रवाह आणि कंपन इफेक्ट */
+@keyframes realisticPour {
+    0% { 
+        background-position-y: 0px; 
+        transform: translateX(-50%) scaleX(1); 
+    }
+    50% { 
+        transform: translateX(-52%) scaleX(0.93); /* पाण्याच्या दाबाचा हेलकावा */
+    }
+    100% { 
+        background-position-y: 32px; 
+        transform: translateX(-50%) scaleX(1); 
+    }
+}
+
+/* पाण्याच्या पृष्ठभागावरील लाटांचा सेंद्रिय प्रवाह */
+@keyframes realisticWaves {
+    0% { background-position-x: 0px; }
+    100% { background-position-x: -60px; }
+}
+
+/* सोलर लाईव्ह एनर्जी फ्लो रेषा */
 @keyframes energyFlow { 0% { background-position: 0px 0; } 100% { background-position: 20px 0; } }
+
+/* घुसखोर आल्यावर सक्रिय होणारा प्रीमियम सायरन इफेक्ट */
 @keyframes sirenFlash { 
     0% { background-color: #fff1f2; border: 2px solid #e11d48; color: #881337; box-shadow: 0 0 0px #e11d48; } 
     50% { background-color: #e11d48; color: white; box-shadow: 0 0 30px rgba(225, 29, 72, 0.6); } 
     100% { background-color: #fff1f2; border: 2px solid #e11d48; color: #881337; box-shadow: 0 0 0px #e11d48; } 
 }
 
-/* ग्लोबल सेटिंग्ज */
+/* ---------------------------------------------------------
+   🎨 २. ग्लोबल मांडणी व बॅनर्स (Layout & Typography)
+   --------------------------------------------------------- */
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'SF Pro Display', 'Segoe UI', Roboto, sans-serif; }
 body { background-color: #f0f2f5; color: #1e293b; padding-bottom: 40px; }
 
-/* मुख्य बॅनर्स (Premium Gradients) */
+/* मुख्य शीर्ष बॅनर्स (Modern Slate Look) */
 .normal-banner { text-align: center; background: linear-gradient(135deg, #0f172a 0%, #334155 100%); padding: 20px; border-radius: 16px; margin: 15px; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15); color: white; }
 .flashing-alert { animation: sirenFlash 0.5s infinite; padding: 20px; border-radius: 16px; text-align: center; margin: 15px; }
 
+/* डॅशबोर्ड २-कॉलम ग्रीड संरचना */
 .main-layout { display: flex; flex-wrap: wrap; gap: 24px; padding: 0 15px; max-width: 1400px; margin: 0 auto; }
 .left-panel { flex: 1.5; min-width: 320px; }
 .right-panel { flex: 1; min-width: 320px; display: flex; flex-direction: column; gap: 24px; }
 
-/* कार्ड डिझाईन्स (Soft Shadows & Rounded Corners) */
-.card { background-color: #ffffff; border-radius: 20px; padding: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.04); border: 1px solid rgba(255,255,255,0.8); margin-bottom: 24px; transition: transform 0.2s ease; }
+/* प्रीमियम मॉड्यूलर कार्ड्स (Soft Shadows) */
+.card { background-color: #ffffff; border-radius: 20px; padding: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.04); border: 1px solid rgba(255,255,255,0.8); margin-bottom: 24px; }
 .card h2, .card h5 { font-size: 1.15rem; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #f1f5f9; text-align: center; color: #334155; font-weight: 700; }
 
+/* 🕉️ पंचांग विशेष कार्ड */
 .panchang-card { background: linear-gradient(to right, #fffbeb, #fef3c7); border: 1px solid #fde68a !important; border-radius: 16px !important; padding: 16px; margin: 0 15px 24px 15px; font-size: 0.95rem; font-weight: 600; display: flex; justify-content: space-between; align-items: center; color: #92400e; box-shadow: 0 4px 15px rgba(251, 191, 36, 0.1); }
 
-/* =========================================================================
-   💧 सुधारित: अत्यंत रिअलिस्टिक पाण्याचा प्रवाह आणि जिवंत तरंग (Fluid FX)
-   ========================================================================= */
+/* ---------------------------------------------------------
+   💧 ३. वास्तववादी वॉटर टँक सिस्टीम (Realistic Water Engine)
+   --------------------------------------------------------- */
+.tanks-grid-top, .tanks-grid-bottom { display: flex; justify-content: center; gap: 20px; }
+.tanks-grid-top { margin-bottom: 20px; }
+.tank-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 50px; }
 
-/* १. पाईपमधून पडणाऱ्या पाण्याचा रिअलिस्टिक प्रवाह (Realistic Water Stream) */
+/* स्लीक सिल्व्हरी ग्लास टँक बॉडी */
+.tank-box { border: 2px solid #cbd5e1; position: relative; background-color: #f8fafc; border-top: none; border-radius: 0 0 16px 16px; box-shadow: inset 0 4px 10px rgba(0,0,0,0.03); width: 100%; }
+
+/* पाण्याचा मुख्य भाग (Overhead Fluids) */
+.water-fill { position: absolute; bottom: 0; width: 100%; background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%); transition: height 1s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; justify-content: center; border-radius: 0 0 14px 14px; z-index: 2; box-shadow: 0 -4px 12px rgba(56, 189, 248, 0.4); }
+
+/* भूमिगत पाण्याचा गडद रंग (Underground Fluids) */
+.ug-water { background: linear-gradient(180deg, #0ea5e9 0%, #0369a1 100%) !important; box-shadow: 0 -4px 12px rgba(14, 165, 233, 0.4) !important; }
+
+.tank-text { color: white; font-weight: 800; font-size: 1.1rem; text-shadow: 0 2px 4px rgba(0,0,0,0.3); text-index: 11; text-align: center; line-height: 1.3; z-index: 11; }
+
+/* ३डी पाण्याचा इनपुट प्रवाह (Realistic Glassy Stream) */
 .water-pour-stream {
     position: absolute;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 10px; /* पाईपमधून पडणाऱ्या पाण्याच्या धारेचा अचूक व्यास */
-    /* पाण्याचा चमकदार, पारदर्शक आणि ३डी लुक (Glassy Layered Gradient) */
+    width: 10px;
     background: linear-gradient(90deg, 
         rgba(56, 189, 248, 0.6) 0%, 
         rgba(255, 255, 255, 0.9) 30%, 
@@ -49,77 +92,61 @@ body { background-color: #f0f2f5; color: #1e293b; padding-bottom: 40px; }
     z-index: 1;
     display: none;
     border-radius: 4px;
-    /* पाण्याच्या उच्च दाबामुळे होणारी हालचाल आणि कंपन (Turbulent Flow Animation) */
     animation: realisticPour 0.12s infinite linear;
 }
 
-/* पाण्याच्या धारेला जिवंत हेलकावा (Micro-Wiggle Effect) देणारे ॲनिमेशन */
-@keyframes realisticPour {
-    0% { 
-        background-position-y: 0px; 
-        transform: translateX(-50%) scaleX(1); 
-    }
-    50% { 
-        transform: translateX(-52%) scaleX(0.93); /* पाण्याचा नैसर्गिक दाब बदलणे */
-    }
-    100% { 
-        background-position-y: 32px; 
-        transform: translateX(-50%) scaleX(1); 
-    }
-}
+/* इनलेट पाईप्स स्ट्रक्चर */
+.pipe-inlet { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); width: 16px; height: 30px; background: linear-gradient(90deg, #94a3b8, #cbd5e1, #94a3b8); border-radius: 4px 4px 0 0; z-index: 3; }
+.pipe-label { position: absolute; bottom: 150%; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: 700; color: #64748b; white-space: nowrap; background: #f1f5f9; padding: 2px 6px; border-radius: 10px; border: 1px solid #e2e8f0; }
 
-/* २. स्थिर पाण्याचा पृष्ठभाग (Static Water Surface) */
-.wave-static {
-    position: absolute;
-    top: -4px;
-    left: 0;
-    width: 100%;
-    height: 8px;
-    background: rgba(255, 255, 255, 0.25);
-    border-top: 2px solid rgba(255, 255, 255, 0.6);
-    z-index: 10;
-    box-shadow: 0 -2px 6px rgba(56, 189, 248, 0.2);
-}
+/* स्थिर पाण्याचा पृष्ठभाग */
+.wave-static { position: absolute; top: -4px; left: 0; width: 100%; height: 8px; background: rgba(255, 255, 255, 0.25); border-top: 2px solid rgba(255, 255, 255, 0.6); z-index: 10; box-shadow: 0 -2px 6px rgba(56, 189, 248, 0.2); }
 
-/* ३. मोटर चालू असताना पाण्याचे नैसर्गिक तरंग (Double-Layered Fluid Ripples) */
+/* मोटर चालू असताना हेलकावे खाणाऱ्या २-लेयर लाटा */
 .wave-animated {
     position: absolute;
     top: -12px;
     left: 0;
     width: 100%;
     height: 16px;
-    /* दोन वेगवेगळ्या पारदर्शकतेच्या (Opacity) नैसर्गिक वक्र लाटांचे SVG */
     background: url("data:image/svg+xml;utf8,<svg viewBox='0 0 80 15' xmlns='http://www.w3.org/2000/svg'><path d='M0 7 Q 10 2, 20 7 T 40 7 T 60 7 T 80 7 L 80 15 L 0 15 Z' fill='rgba(56, 189, 248, 0.5)'/><path d='M0 9 Q 8 4, 16 9 T 32 9 T 48 9 T 64 9 T 80 9 L 80 15 L 0 15 Z' fill='rgba(255, 255, 255, 0.35)'/></svg>") repeat;
     background-size: 60px 16px;
-    /* लाटांचा वेग अत्यंत स्मूथ ठेवण्यासाठी ॲनिमेशन */
     animation: realisticWaves 0.8s infinite linear;
     z-index: 10;
     display: none;
 }
 
-@keyframes realisticWaves {
-    0% { background-position-x: 0px; }
-    100% { background-position-x: -60px; }
-}
-/* 🎛️ स्टार्टर आणि वाल्व्ह कंट्रोल्स (Premium UI) */
+/* कॅप्सूल डिझाईन नेम टॅग्ज */
+.tank-name-tag { margin-top: 20px; font-weight: 700; font-size: 12px; text-align: center; background: #ffffff; color: #475569; padding: 6px 16px; border-radius: 20px; border: 1px solid #e2e8f0; width: auto; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+
+/* इको गार्डन कार्ड */
+.garden-box { border: 2px solid #bbf7d0; border-radius: 16px; background: #f0fdf4; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; width: 100%; }
+
+/* ---------------------------------------------------------
+   🎛️ ४. स्टार्टर पॅनल आणि वाल्व्ह कंट्रोल्स (Premium Control Dashboard)
+   --------------------------------------------------------- */
 .control-block-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
 .panel-header-dark { background: #1e293b; color: white; font-size: 12px; font-weight: 700; padding: 8px; border-radius: 8px; margin-bottom: 12px; text-align: center; letter-spacing: 0.5px; }
 .panel-header-green { background: #dcfce7; color: #166534; font-size: 12px; font-weight: 700; padding: 8px; border-radius: 8px; margin-bottom: 12px; text-align: center; letter-spacing: 0.5px; }
 .control-sub-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 
-/* स्टार्टर बॉक्स (डार्क मोड लुक) */
+/* इंडस्ट्रियल डार्क स्टार्टर बॉक्सेस */
 .starter-box { background-color: #0f172a; padding: 12px 8px; border-radius: 12px; text-align: center; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
 .starter-title { font-size: 11px; font-weight: 700; margin-bottom: 10px; color: #94a3b8; }
 .indicator-lights { display: flex; justify-content: space-around; margin-bottom: 12px; }
+
+/* निऑन इंडिकेटर दिवे */
 .light { width: 14px; height: 14px; border-radius: 50%; font-size: 0px; background: #334155; transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
 .light.on.active { background: #22c55e; box-shadow: 0 0 12px #22c55e, inset 0 2px 4px rgba(255,255,255,0.4); }
 .light.off.active { background: #ef4444; box-shadow: 0 0 12px #ef4444, inset 0 2px 4px rgba(255,255,255,0.4); }
+
+/* टच-पॅड बटणे */
 .starter-btns { display: flex; gap: 4px; }
-.starter-btns button { flex: 1; font-size: 10px; font-weight: 800; padding: 6px 0; cursor: pointer; border-radius: 6px; border: none; transition: transform 0.1s, filter 0.2s; }
+.starter-btns button { flex: 1; font-size: 10px; font-weight: 800; padding: 6px 0; cursor: pointer; border-radius: 6px; border: none; transition: all 0.1s ease; }
 .starter-btns button:hover { filter: brightness(1.1); transform: translateY(-1px); }
 .starter-btns button:active { transform: translateY(1px); }
 
-/* वाल्व्ह डिझाईन */
+/* मॅट-फिनिश वाल्व्ह कंट्रोल्स कार्ड्स */
 .valve-box { text-align: center; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 8px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
 .valve-box:hover { box-shadow: 0 6px 15px rgba(0,0,0,0.05); transform: translateY(-2px); border-color: #cbd5e1; }
 .valve-title { font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 8px; }
@@ -127,10 +154,18 @@ body { background-color: #f0f2f5; color: #1e293b; padding-bottom: 40px; }
 .valve-handle { transform-origin: 30px 45px; transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
 .valve-status { font-size: 12px; font-weight: 800; color: #ef4444; margin-top: 6px; }
 
-/* ☀️ सोलर */
+/* ---------------------------------------------------------
+   ☀️ ५. सोलर आणि पॉवर मॅनेजमेंट (Energy Management UI)
+   --------------------------------------------------------- */
 .solar-card { background: linear-gradient(to bottom right, #ffffff, #fffbeb); border: 1px solid #fde047; }
 .solar-flow-container { background-color: #ffffff; padding: 12px; border-radius: 12px; border: 1px solid #f1f5f9; margin-top: 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: inset 0 2px 6px rgba(0,0,0,0.02); }
 .flow-line { flex-grow: 1; height: 6px; margin: 0 8px; border-radius: 3px; background-image: repeating-linear-gradient(90deg, #e2e8f0 0px, #e2e8f0 10px, transparent 10px, transparent 20px); background-size: 20px 100%; }
 .flow-line.active { background-image: repeating-linear-gradient(90deg, #38bdf8 0px, #38bdf8 10px, transparent 10px, transparent 20px); animation: energyFlow 0.5s linear infinite; }
 
-@media (max-width: 768px) { .main-layout { flex-direction: column; } .control-block-wrapper { grid-template-columns: 1fr; } }
+/* ---------------------------------------------------------
+   📱 ६. मोबाईल रिस्पॉन्सिव्ह डिझाईन (Mobile Layout Adjustments)
+   --------------------------------------------------------- */
+@media (max-width: 768px) { 
+    .main-layout { flex-direction: column; } 
+    .control-block-wrapper { grid-template-columns: 1fr; } 
+}
