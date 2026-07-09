@@ -1,98 +1,68 @@
-/* बेसिक सेटिंग्ज */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+@keyframes waterPour { 0% { background-position: 0 0px; } 100% { background-position: 0 16px; } }
+@keyframes waveMove { 0% { background-position-x: 0px; } 100% { background-position-x: 40px; } }
+@keyframes energyFlow { 0% { background-position: 0px 0; } 100% { background-position: 20px 0; } }
+@keyframes sirenFlash { 0% { background-color: #ffebee; border: 4px solid #d32f2f; color: #333; } 50% { background-color: #d32f2f; color: white; box-shadow: 0 0 40px #d32f2f; } 100% { background-color: #ffebee; border: 4px solid #d32f2f; color: #333; } }
 
-body {
-    background-color: #f4f7f6; /* हलका राखाडी रंग */
-    color: #333;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+body { background-color: #f4f7f6; color: #333; padding-bottom: 30px; }
 
-/* हेडर डिझाईन */
-header {
-    background-color: #2c3e50; /* गडद निळा रंग */
-    color: white;
-    text-align: center;
-    padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
+.normal-banner { text-align: center; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); padding: 15px; border-radius: 8px; margin: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); color: white; }
+.flashing-alert { animation: sirenFlash 0.5s infinite; padding: 15px; border-radius: 12px; text-align: center; margin: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 
-header h1 {
-    font-size: 1.5rem;
-    letter-spacing: 1px;
-}
+.main-layout { display: flex; flex-wrap: wrap; gap: 20px; padding: 0 15px; max-width: 1400px; margin: 0 auto; }
+.left-panel { flex: 1.5; min-width: 300px; }
+.right-panel { flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 20px; }
 
-/* डॅशबोर्ड ग्रीड (Responsive Layout) */
-.dashboard-container {
-    display: grid;
-    /* मोबाईलवर १ रकाना, मोठ्या स्क्रीनवर आपोआप जास्त रकाने */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
+.card { background-color: white; border-radius: 12px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); margin-bottom: 20px; }
+.card h2, .card h5 { font-size: 1.1rem; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #ecf0f1; text-align: center; }
 
-/* मॉड्यूलर कार्ड्सची डिझाईन */
-.card {
-    background-color: white;
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    transition: transform 0.2s;
-}
+.panchang-card { background-color: #fffde7 !important; border: 2px solid #fbc02d !important; border-radius: 8px !important; padding: 12px; margin: 0 15px 15px 15px; font-size: 0.95rem; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
 
-.card:hover {
-    transform: translateY(-5px); /* कार्डवर माऊस नेल्यास थोडे वर येईल */
-}
+/* 💧 वॉटर ग्राफिक्स */
+.tanks-grid-top, .tanks-grid-bottom { display: flex; justify-content: center; gap: 15px; }
+.tanks-grid-top { margin-bottom: 15px; }
+.tank-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 50px; }
+.tank-box { border: 3px solid #333; position: relative; background-color: #eef2f3; border-top: 1px solid #aaa; border-radius: 0 0 12px 12px; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); width: 100%; }
+.water-fill { position: absolute; bottom: 0; width: 100%; background: linear-gradient(to bottom, #4facfe 0%, #00f2fe 100%); transition: height 1s ease-in-out; display: flex; align-items: center; justify-content: center; border-radius: 0 0 9px 9px; z-index: 2; border-top: 1px solid rgba(255,255,255,0.4); }
+.ug-water { background: linear-gradient(to bottom, #0077b6 0%, #023e8a 100%) !important; }
 
-.card h2 {
-    font-size: 1.2rem;
-    color: #2980b9;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #ecf0f1;
-    padding-bottom: 10px;
-}
+.tank-text { color: white; font-weight: bold; font-size: 16px; text-shadow: 1px 1px 3px black; text-align: center; line-height: 1.2; }
 
-/* डेटा दाखवण्याची पद्धत (उदा. ८०%) */
-.data-display {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #27ae60;
-    margin: 15px 0;
-}
+.pipe-inlet { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); width: 14px; height: 25px; background-color: #bdc3c7; border-left: 1px solid #7f8c8d; border-right: 1px solid #7f8c8d; z-index: 3; }
+.pipe-label { position: absolute; bottom: 135%; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: bold; color: #555; white-space: nowrap; }
+.water-pour-stream { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 10px; background-image: repeating-linear-gradient(transparent, #00b4d8 4px, transparent 8px); background-size: 100% 16px; animation: waterPour 0.3s infinite linear; z-index: 1; display: none; }
 
-/* मोटर कंट्रोल बटण */
-.btn {
-    background-color: #e74c3c; /* लाल रंग (सध्या मोटर बंद आहे म्हणून) */
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    font-size: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 100%;
-    font-weight: bold;
-    margin-top: 10px;
-    transition: background-color 0.3s;
-}
+.wave-static { position: absolute; top: 0; left: 0; width: 100%; height: 5px; background-color: #005b96; border-top: 2px solid rgba(255,255,255,0.4); z-index: 10; }
+.wave-animated { position: absolute; top: -10px; left: 0; width: 100%; height: 15px; background: url("data:image/svg+xml;utf8,<svg viewBox='0 0 40 15' xmlns='http://www.w3.org/2000/svg'><path d='M0 8 Q 10 15, 20 8 T 40 8 L 40 15 L 0 15 Z' fill='%23005b96'/></svg>") repeat-x; background-size: 40px 15px; animation: waveMove 1s linear infinite; z-index: 10; display: none; }
 
-.btn:active {
-    transform: scale(0.98); /* बटण दाबल्याचा फील */
-}
+.tank-name-tag { margin-top: 15px; font-weight: bold; font-size: 13px; text-align: center; background: #333; color: white; padding: 4px 10px; border-radius: 6px; width: 90%; box-shadow: 2px 2px 5px rgba(0,0,0,0.3); }
+.garden-box { border: 3px solid #2e7d32; border-radius: 12px; background: #e8f5e9; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; width: 100%; }
 
-/* सीसीटीव्हीसाठी रिकामी जागा */
-.cctv-placeholder {
-    background-color: #ecf0f1;
-    height: 150px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #7f8c8d;
-    margin-top: 10px;
-}
+/* 🎛️ कंट्रोल्स लेआउट */
+.control-block-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+.panel-header-dark { background:#424242; color:white; font-size:12px; font-weight:bold; padding:4px; border-radius:4px; margin-bottom:8px; text-align:center; }
+.panel-header-green { background:#c8e6c9; color:#2e7d32; font-size:12px; font-weight:bold; padding:4px; border-radius:4px; margin-bottom:8px; text-align:center; }
+.control-sub-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+
+.starter-box { background-color: #1a1a1a; padding: 8px; border-radius: 8px; border: 1px solid #333; text-align: center; color: white; }
+.starter-title { font-size: 10px; font-weight: bold; margin-bottom: 5px; }
+.indicator-lights { display: flex; justify-content: space-around; margin-bottom: 6px; }
+.light { width: 18px; height: 18px; border-radius: 50%; font-size: 7px; font-weight: bold; display: flex; align-items: center; justify-content: center; background: #222; color: #555; transition: 0.3s; }
+.light.on.active { background: #00ff00; box-shadow: 0 0 8px #00ff00; color: black; }
+.light.off.active { background: #ff0000; box-shadow: 0 0 8px #ff0000; color: white; }
+.starter-btns { display: flex; gap: 3px; }
+.starter-btns button { width: 50%; font-size: 9px; font-weight: bold; padding: 3px 0; cursor: pointer; border-radius: 3px; border: 1px solid #555; }
+
+.valve-box { text-align: center; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 6px; padding: 6px; cursor: pointer; }
+.valve-title { font-size: 11px; font-weight: bold; color: #333; margin-bottom: 4px; }
+.valve-svg { max-width: 25px; height: auto; }
+.valve-handle { transform-origin: 30px 45px; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+.valve-status { font-size: 11px; font-weight: 900; color: #e74c3c; margin-top: 2px; }
+
+/* ☀️ सोलर */
+.solar-card { background-color: #fffde7; border: 1px solid #fbc02d; position: relative; }
+.solar-flow-container { background-color: #f8f9fa; padding: 10px; border-radius: 8px; border: 1px solid #eee; margin-top: 10px; display: flex; align-items: center; justify-content: space-between; }
+.flow-line { flex-grow: 1; height: 4px; margin: 0 5px; background-image: repeating-linear-gradient(90deg, #bdc3c7 0px, #bdc3c7 10px, transparent 10px, transparent 20px); background-size: 20px 100%; }
+.flow-line.active { background-image: repeating-linear-gradient(90deg, #00b4d8 0px, #00b4d8 10px, transparent 10px, transparent 20px); animation: energyFlow 0.5s linear infinite; }
+
+@media (max-width: 768px) { .main-layout { flex-direction: column; } .control-block-wrapper { grid-template-columns: 1fr; } }
