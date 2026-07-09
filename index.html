@@ -6,19 +6,22 @@
     <title>अभिप्राजामेयार्णव स्मार्ट होम</title>
     
     <style>
+        /* बेसिक सेटिंग्ज */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
         body { background-color: #f4f7f6; color: #333; }
         header { background-color: #2c3e50; color: white; text-align: center; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .dashboard-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; }
+        
+        /* डॅशबोर्ड ग्रीड */
+        .dashboard-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto; }
         .card { background-color: white; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
         .card h2 { font-size: 1.2rem; color: #2980b9; margin-bottom: 15px; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; }
         
-        /* --- १. पाण्याची टाकी ॲनिमेशन (Water Tank CSS) --- */
+        /* --- पाण्याची टाकी ॲनिमेशन --- */
         .tank-container {
             width: 120px;
             height: 180px;
             border: 4px solid #34495e;
-            border-radius: 10px 10px 10px 10px;
+            border-radius: 10px;
             margin: 20px auto;
             position: relative;
             background-color: #ecf0f1;
@@ -26,13 +29,13 @@
             box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
         }
         
-        /* पाण्याला वर-खाली करण्यासाठी (Transition Effect) */
+        /* भूमिगत टाकीसाठी थोडा वेगळा रंग (तपकिरी बॉर्डर) */
+        .underground-tank { border-color: #8d6e63; }
+
         .water-fill {
             position: absolute;
             bottom: 0;
             width: 100%;
-            /* पाण्याची पातळी इथे सेट होते. जावास्क्रिप्टने हे बदलल्यावर ॲनिमेशन दिसेल */
-            height: 80%; 
             background: linear-gradient(to bottom, #3498db, #2980b9);
             transition: height 1.5s ease-in-out;
             box-shadow: 0 -5px 15px rgba(52, 152, 219, 0.7);
@@ -50,25 +53,36 @@
             z-index: 2;
         }
 
-        .btn { background-color: #e74c3c; color: white; border: none; padding: 12px 20px; font-size: 1rem; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 15px; }
-
-        /* --- २. सोलर एनर्जी ॲनिमेशन (Solar CSS) --- */
+        /* --- पंप आणि कंट्रोल स्विचेस --- */
+        .pump-control {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #3498db;
+        }
+        .pump-title { font-weight: bold; font-size: 0.95rem; text-align: left; }
+        .status-badge { background: #e74c3c; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; }
+        
+        .btn { background-color: #27ae60; color: white; border: none; padding: 8px 15px; font-size: 0.9rem; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn:hover { background-color: #2ecc71; }
+        .btn-red { background-color: #e74c3c; }
+        
+        /* --- सोलर ॲनिमेशन --- */
         .solar-icon {
             font-size: 5rem;
             margin: 10px 0;
             display: inline-block;
-            /* सूर्य फिरण्याचा आणि चमकण्याचा इफेक्ट */
             animation: spinSun 12s linear infinite, glowSun 2s alternate infinite;
         }
-        
-        @keyframes spinSun {
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spinSun { 100% { transform: rotate(360deg); } }
         @keyframes glowSun {
             0% { text-shadow: 0 0 10px #f1c40f; color: #f1c40f; }
             100% { text-shadow: 0 0 30px #e67e22, 0 0 50px #e74c3c; color: #f39c12; }
         }
-
         .solar-text { font-size: 2.2rem; font-weight: bold; color: #d35400; margin-top: 10px; }
 
         .cctv-placeholder { background-color: #ecf0f1; height: 150px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #7f8c8d; margin-top: 10px; }
@@ -81,29 +95,61 @@
     <main class="dashboard-container">
         
         <div class="card">
-            <h2>💧 पाण्याची टाकी</h2>
-            
+            <h2>⬇️ भूमिगत टाकी (Underground)</h2>
+            <div class="tank-container underground-tank">
+                <div class="water-fill" style="height: 60%;"></div>
+                <div class="water-level-text">60%</div>
+            </div>
+            <p>स्रोत: बोरवेल / टँकर</p>
+        </div>
+
+        <div class="card">
+            <h2>⬆️ वरची टाकी १</h2>
             <div class="tank-container">
-                <div class="water-fill" id="waterFillDiv" style="height: 80%;"></div>
-                <div class="water-level-text" id="waterLevel">80%</div>
+                <div class="water-fill" style="height: 85%;"></div>
+                <div class="water-level-text">85%</div>
+            </div>
+            <p>मुख्य मोटर स्टेटस: <span class="status-badge">बंद</span></p>
+        </div>
+
+        <div class="card">
+            <h2>⬆️ वरची टाकी २</h2>
+            <div class="tank-container">
+                <div class="water-fill" style="height: 40%;"></div>
+                <div class="water-level-text">40%</div>
+            </div>
+            <p>मुख्य मोटर स्टेटस: <span class="status-badge">बंद</span></p>
+        </div>
+
+        <div class="card" style="grid-column: span 1;">
+            <h2>🚰 पंप आणि सिंचन नियंत्रण</h2>
+            
+            <div class="pump-control">
+                <div class="pump-title">बोरवेल पंप<br><small>भूमिगत टाकी भरण्यासाठी</small></div>
+                <button class="btn btn-red">सुरू करा</button>
             </div>
             
-            <p>स्थिती: <span id="motorStatus">बंद</span></p>
-            <button id="motorToggleBtn" class="btn">मोटर सुरू करा</button>
+            <div class="pump-control">
+                <div class="pump-title">मुख्य मोटर<br><small>वरच्या टाक्या भरण्यासाठी</small></div>
+                <button class="btn btn-red">सुरू करा</button>
+            </div>
+            
+            <div class="pump-control">
+                <div class="pump-title">गार्डन स्प्रिंकलर<br><small>बागेसाठी पाणी</small></div>
+                <button class="btn btn-red">सुरू करा</button>
+            </div>
         </div>
 
         <div class="card">
             <h2>☀️ सोलर जनरेशन</h2>
-            
             <div class="solar-icon">☀️</div>
-            
             <p>आजची ऊर्जा:</p>
-            <div class="solar-text" id="solarUnits">-- kWh</div>
+            <div class="solar-text">14.2 kWh</div>
         </div>
 
         <div class="card">
             <h2>📅 आजचे पंचांग</h2>
-            <p id="panchangTithi">माहिती लोड होत आहे...</p>
+            <p style="margin-top:20px; font-weight:bold; color:#2c3e50;">माहिती लोड होत आहे...</p>
         </div>
 
         <div class="card">
