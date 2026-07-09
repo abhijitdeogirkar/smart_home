@@ -4,14 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>अभिप्राजामेयार्णव स्मार्ट होम</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background-color: #f4f7f6; color: #333; }
+        header { background-color: #2c3e50; color: white; text-align: center; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .dashboard-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .card { background-color: white; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.05); transition: transform 0.2s; }
+        .card:hover { transform: translateY(-5px); }
+        .card h2 { font-size: 1.2rem; color: #2980b9; margin-bottom: 15px; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; }
+        .data-display { font-size: 2.5rem; font-weight: bold; color: #27ae60; margin: 15px 0; }
+        .btn { background-color: #e74c3c; color: white; border: none; padding: 12px 20px; font-size: 1rem; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px; }
+        .cctv-placeholder { background-color: #ecf0f1; height: 150px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #7f8c8d; margin-top: 10px; }
+    </style>
 </head>
 <body>
     <header>
         <h1>अभिप्राजामेयार्णव स्मार्ट होम</h1>
     </header>
-
     <main class="dashboard-container">
         <div class="card">
             <h2>💧 पाण्याची टाकी</h2>
@@ -19,26 +29,19 @@
             <p>स्थिती: <span id="motorStatus">बंद</span></p>
             <button id="motorToggleBtn" class="btn">मोटर सुरू करा</button>
         </div>
-
         <div class="card">
             <h2>☀️ सोलर जनरेशन</h2>
             <p>आजची ऊर्जा:</p>
             <div class="data-display" id="solarUnits">-- kWh</div>
         </div>
-
         <div class="card">
             <h2>📅 आजचे पंचांग</h2>
             <p id="panchangTithi">माहिती लोड होत आहे...</p>
         </div>
-
         <div class="card">
             <h2>📷 सीसीटीव्ही (CCTV)</h2>
-            <div class="cctv-placeholder">
-                <p>कॅमेरा फीड येथे दिसेल</p>
-            </div>
+            <div class="cctv-placeholder"><p>कॅमेरा फीड येथे दिसेल</p></div>
         </div>
     </main>
-
-    <script src="app.js"></script>
 </body>
 </html>
