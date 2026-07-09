@@ -1,1 +1,98 @@
+/* बेसिक सेटिंग्ज */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
+body {
+    background-color: #f4f7f6; /* हलका राखाडी रंग */
+    color: #333;
+}
+
+/* हेडर डिझाईन */
+header {
+    background-color: #2c3e50; /* गडद निळा रंग */
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+/* डॅशबोर्ड ग्रीड (Responsive Layout) */
+.dashboard-container {
+    display: grid;
+    /* मोबाईलवर १ रकाना, मोठ्या स्क्रीनवर आपोआप जास्त रकाने */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* मॉड्यूलर कार्ड्सची डिझाईन */
+.card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* कार्डवर माऊस नेल्यास थोडे वर येईल */
+}
+
+.card h2 {
+    font-size: 1.2rem;
+    color: #2980b9;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 10px;
+}
+
+/* डेटा दाखवण्याची पद्धत (उदा. ८०%) */
+.data-display {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #27ae60;
+    margin: 15px 0;
+}
+
+/* मोटर कंट्रोल बटण */
+.btn {
+    background-color: #e74c3c; /* लाल रंग (सध्या मोटर बंद आहे म्हणून) */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.btn:active {
+    transform: scale(0.98); /* बटण दाबल्याचा फील */
+}
+
+/* सीसीटीव्हीसाठी रिकामी जागा */
+.cctv-placeholder {
+    background-color: #ecf0f1;
+    height: 150px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7f8c8d;
+    margin-top: 10px;
+}
