@@ -159,29 +159,21 @@
 
             <div class="card">
                 <h5 style="color: #c2185b;">🛡️ सुरक्षा प्रणाली</h5>
-                <div style="display: flex; justify-content: space-between; align-items: center; background:#f9f9f9; padding:10px; border-radius:6px;">
-                    <label style="font-weight: bold; font-size: 14px; cursor: pointer;">
-                        <input type="checkbox" id="alarmToggle" onchange="triggerSecurityAlarm()"> 🚨 अलार्म सिस्टीम (Arm)
-                    </label>
-                    <span style="font-size: 12px; font-weight: bold; color:#7f8c8d;">CCTV Active</span>
+                <div style="display: flex; justify-content: center; align-items: center; background:#f9f9f9; padding:10px; border-radius:6px;">
+                    <span style="font-size: 14px; font-weight: bold; color:#7f8c8d;">CCTV Active 🟢</span>
                 </div>
             </div>
 
             <div class="card" style="background: #fafafa; border: 1px dashed #bbb;">
-                <h5 style="color: #e67e22;">⚙️ सिस्टिम सिम्युलेटर (सिम्युलेशन टेस्ट)</h5>
+                <h5 style="color: #e67e22;">⚙️ सिस्टिम सिम्युलेटर</h5>
                 <label style="display:block; margin-bottom:8px; font-size:13px; font-weight:bold;">
                     <input type="checkbox" id="simTanker" onchange="updateWaterFlowLogic()"> 🚚 टँकरचे पाणी सुरू करा
-                </label>
-                <label style="display:block; font-size:13px; font-weight:bold; color:#c2185b;">
-                    <input type="checkbox" id="simMotion" onchange="triggerSecurityAlarm()"> 🚶 हालचाल सिम्युलेट करा (Intruder Test)
                 </label>
             </div>
         </div>
     </div>
 
-    <audio id="sirenAudio" src="https://upload.wikimedia.org/wikipedia/commons/4/40/Siren_Noise.ogg" loop></audio>
-
-   <script src="app.js"></script>
+    <script src="app.js"></script>
     <script src="panchang.js"></script>
     <script src="water.js"></script>
     <script src="security.js"></script>
