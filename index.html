@@ -12,7 +12,7 @@
 <body style="margin: 0; overflow-x: hidden;">
 
     <!-- =========================================================================
-         नवीन: सिक्युरिटी (PIN) लॉगिन स्क्रीन
+         सिक्युरिटी (PIN) लॉगिन स्क्रीन
          ========================================================================= -->
     <div id="pinLoginScreen" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0f172a; display: flex; justify-content: center; align-items: center; z-index: 9000; flex-direction: column; color: white;">
         <img src="icon.png" alt="Abhiprajameyarnav Icon" style="width: 80px; margin-bottom: 20px;">
@@ -40,6 +40,9 @@
       }
     </script>
 
+    <!-- =========================================================================
+         मुख्य डॅशबोर्ड
+         ========================================================================= -->
     <div id="mainBanner" class="normal-banner">
         <h2 id="bannerTitle" style="margin: 0; font-weight: 800; letter-spacing: 1px;">अभिप्राजामेयार्णव</h2>
         <h4 id="bannerSub" style="color: #81d4fa; margin: 3px 0 0 0; font-weight: 500;">पाणी, ऊर्जा व सुरक्षा व्यवस्थापन प्रणाली</h4>
@@ -52,6 +55,7 @@
 
     <div class="main-layout">
         
+        <!-- लेफ्ट पॅनल: वॉटर टँक्स आणि कंट्रोल्स -->
         <div class="left-panel">
             <div class="card" style="padding-bottom: 25px;">
                 <h2 style="color: #2980b9;">💧 लाईव्ह वॉटर डॅशबोर्ड</h2>
@@ -172,12 +176,13 @@
             </div>
         </div>
 
+        <!-- राईट पॅनल: सोलर आणि सिक्युरिटी -->
         <div class="right-panel">
             <div class="card solar-card">
                 <h5 style="color: #f57f17; border-bottom-color: #fff59d;">☀️ सोलर ऊर्जा (Sofar Inverter)</h5>
                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 10px 0;">
-                    <div style="text-align: center;"><div style="font-size: 12px; color: #666;">सध्याची निर्मिती</div><div style="font-size: 18px; font-weight: bold; color: #2e7d32;">3.45 kW</div></div>
-                    <div style="text-align: center;"><div style="font-size: 12px; color: #666;">आजची निर्मिती</div><div style="font-size: 18px; font-weight: bold; color: #1565c0;">14.20 kWh</div></div>
+                    <div style="text-align: center;"><div style="font-size: 12px; color: #666;">सध्याची निर्मिती</div><div id="liveSolarGen" style="font-size: 18px; font-weight: bold; color: #2e7d32;">-- kW</div></div>
+                    <div style="text-align: center;"><div style="font-size: 12px; color: #666;">आजची निर्मिती</div><div id="todaySolarGen" style="font-size: 18px; font-weight: bold; color: #1565c0;">-- kWh</div></div>
                 </div>
                 <div class="solar-flow-container">
                     <div style="text-align: center; font-size: 11px; font-weight: bold;">Panels</div>
@@ -186,7 +191,7 @@
                     <div id="solar_line2" class="flow-line active"></div>
                     <div style="text-align: center; font-size: 11px; font-weight: bold;">Grid</div>
                 </div>
-                <div style="font-size: 12px; font-weight: bold; color: #2e7d32; margin-top: 8px; text-align: center;">🟢 सौर ऊर्जेची निर्मिती सुरू आहे (Live)</div>
+                <div id="solarStatus" style="font-size: 12px; font-weight: bold; color: #2e7d32; margin-top: 8px; text-align: center;">सिस्टम स्थिती तपासत आहे...</div>
             </div>
 
             <div class="card">
@@ -208,7 +213,6 @@
     <!-- =========================================================================
          🚀 कस्टम PWA इन्स्टॉल पॉप-अप आणि पोस्ट-इन्स्टॉल स्क्रीन
          ========================================================================= -->
-    
     <div id="installOverlay" class="install-overlay" style="display: none;">
         <div class="install-card">
             <img src="icon.png" alt="App Icon" class="install-icon">
@@ -225,7 +229,7 @@
         <button onclick="window.close()" class="close-browser-btn">हा ब्राउझर बंद करा</button>
     </div>
 
-    <!-- PWA Service Worker & Custom Install Logic -->
+    <!-- PWA Service Worker & Splash Screen Logic -->
     <script>
         let deferredPrompt;
         const installOverlay = document.getElementById('installOverlay');
@@ -272,10 +276,9 @@
     </script>
 
     <!-- =========================================================================
-         सिक्युरिटी पडताळणी स्क्रिप्ट
+         सिक्युरिटी आणि API कॉल्सची अचूक स्क्रिप्ट
          ========================================================================= -->
     <script>
-        // येथे तुमची नवीन डिप्लॉय केलेली GAS URL टाका
         const GAS_URL = "https://script.google.com/macros/s/AKfycbzhRahy5y9o_ln7rkfkDsNy5HUao0wb1uajESoK5sh8Fo5wzCF9LRRqSk1rmENlXTihPA/exec"; 
         
         async function verifyPinAndLoad() {
@@ -303,6 +306,7 @@
                 
                 if (result.status === "success") {
                     document.getElementById('pinLoginScreen').style.display = "none";
+                    fetchSolarData(pin);
                 } else {
                     errorMsg.innerText = "चुकीचा PIN. प्रवेश नाकारला.";
                     errorMsg.style.display = "block";
@@ -315,62 +319,47 @@
                 btn.innerText = "अनलॉक करा";
             }
         }
-    </script>
 
-    // सोलर डेटा मिळवणारे फंक्शन
-    async function fetchSolarData(userPin) {
-        const solarStatus = document.getElementById('solarStatus');
-        const liveSolarGen = document.getElementById('liveSolarGen');
-        const todaySolarGen = document.getElementById('todaySolarGen');
+        async function fetchSolarData(userPin) {
+            const solarStatus = document.getElementById('solarStatus');
+            const liveSolarGen = document.getElementById('liveSolarGen');
+            const todaySolarGen = document.getElementById('todaySolarGen');
 
-        try {
-            solarStatus.innerText = "सोलर डेटा आणत आहे...";
-            solarStatus.style.color = "#f57c00";
+            try {
+                solarStatus.innerText = "सोलर डेटा आणत आहे...";
+                solarStatus.style.color = "#f57c00";
 
-            let response = await fetch(GAS_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ action: "read_solar", pin: userPin })
-            });
-            
-            let result = await response.json();
-            
-            if (result.status === "success") {
-                    // PIN बरोबर आहे, लॉगिन स्क्रीन लपवा आणि डॅशबोर्ड दिसू द्या
-                    document.getElementById('pinLoginScreen').style.display = "none";
-                    
-                    // ==========================================
-                    // नवीन बदल: लॉगिन यशस्वी झाल्यावर सोलर डेटा मागवा
-                    // ==========================================
-                    fetchSolarData(pin);
-                    
-                } else {
-
-                // =========================================================================
-                // ⚠️ अत्यंत महत्त्वाचे: खालील 'result.data.XXX' मधील XXX तुम्हाला तुमच्या 
-                // Console मध्ये पाहून बदलावे लागतील. (उदा. result.data.current_power)
-                // =========================================================================
+                let response = await fetch(GAS_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: "read_solar", pin: userPin })
+                });
                 
-                // सध्या आपण तात्पुरती नावे वापरत आहोत (तुम्ही ती तपासून बदला)
-                let currentPower = result.data.current_power || result.data.pac || "--";
-                let todayEnergy = result.data.today_energy || result.data.e_today || "--";
+                let result = await response.json();
+                
+                if (result.status === "success") {
+                    console.log("🔥 सोलर API चा कच्चा डेटा:", result.data);
 
-                liveSolarGen.innerText = currentPower + " kW";
-                todaySolarGen.innerText = todayEnergy + " kWh";
+                    let currentPower = result.data.current_power || result.data.pac || "--";
+                    let todayEnergy = result.data.today_energy || result.data.e_today || "--";
 
-                solarStatus.innerText = "🟢 सोलर डेटा अपडेट झाला (Live)";
-                solarStatus.style.color = "#2e7d32";
-            } else {
-                console.error("API Error:", result.message);
-                solarStatus.innerText = "🔴 API एरर: डेटा मिळाला नाही";
+                    liveSolarGen.innerText = currentPower + " kW";
+                    todaySolarGen.innerText = todayEnergy + " kWh";
+
+                    solarStatus.innerText = "🟢 सोलर डेटा अपडेट झाला (Live)";
+                    solarStatus.style.color = "#2e7d32";
+                } else {
+                    console.error("API Error:", result.message);
+                    solarStatus.innerText = "🔴 API एरर: डेटा मिळाला नाही";
+                    solarStatus.style.color = "#d32f2f";
+                }
+            } catch (error) {
+                console.error("Fetch Error:", error);
+                solarStatus.innerText = "🔴 सर्व्हरशी संपर्क तुटला";
                 solarStatus.style.color = "#d32f2f";
             }
-        } catch (error) {
-            console.error("Fetch Error:", error);
-            solarStatus.innerText = "🔴 सर्व्हरशी संपर्क तुटला";
-            solarStatus.style.color = "#d32f2f";
         }
-    }
+    </script>
 
     <script src="app.js"></script>
     <script src="panchang.js"></script>
