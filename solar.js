@@ -1,5 +1,5 @@
 // =========================================================
-// solar.js : सोलर API डेटा आणि Streamlit-Style ॲनिमेशन
+// solar.js : सोलर API डेटा, २-डिजिट एक्यूरेसी आणि ॲनिमेशन
 // =========================================================
 
 async function fetchSolarData(userPin) {
@@ -27,11 +27,11 @@ async function fetchSolarData(userPin) {
             let rawPower = result.data.generationPower; 
             let totalEnergy = result.data.generationTotal;
 
-            // १. मुख्य निर्मिती आकडेवारी अपडेट करणे
+            // १. आकडेवारी दोन डिजिट (उदा. 0.80 kW आणि 6.97 kWh) करणे
             liveSolarGen.innerText = (rawPower !== null && rawPower > 0) ? (rawPower / 1000).toFixed(2) + " kW" : "0.00 kW";
-            todaySolarGen.innerText = (totalEnergy !== null) ? (totalEnergy / 1000).toFixed(1) + " kWh" : "0.0 kWh";
+            todaySolarGen.innerText = (totalEnergy !== null) ? (totalEnergy / 1000).toFixed(2) + " kWh" : "0.00 kWh";
 
-            // २. ॲनिमेशन आणि लाईव्ह स्टेटस (Active / Sleep Mode)
+            // २. ॲनिमेशन आणि लाईव्ह स्टेटस
             if (rawPower > 0) {
                 cardBox.style.animation = "sunGlow 3s infinite";
                 line1.classList.add("flow-animated");
