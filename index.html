@@ -10,6 +10,13 @@
     <link rel="apple-touch-icon" href="icon.png">
 </head>
 <body>
+
+    <!-- कस्टम स्प्लॅश स्क्रीन -->
+    <div id="customSplashScreen" class="splash-screen">
+        <img src="icon.png" alt="Abhiprajameyarnav Icon" class="splash-icon">
+        <h2 class="splash-text">अभिप्राजामेयार्णव</h2>
+    </div>
+    
     <!-- PWA Service Worker Registration -->
     <script>
       if ('serviceWorker' in navigator) {
@@ -257,7 +264,23 @@
             // काही ब्राउझर्समध्ये 'window.close()' थेट चालते, त्याचा प्रयत्न
             setTimeout(() => { window.close(); }, 2000);
         });
+
+    // कस्टम स्प्लॅश स्क्रीनचा वेळ ठरवणे (उदा. 3 सेकंद)
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('customSplashScreen');
+                if(splash) {
+                    splash.style.opacity = '0'; // स्क्रीन हळूहळू गायब करणे
+                    setTimeout(() => { 
+                        splash.style.display = 'none'; // ॲनिमेशन पूर्ण झाल्यावर पूर्णपणे काढणे
+                    }, 500);
+                }
+            }, 3000); // 3000 मिलिसेकंद = 3 सेकंद. तुम्हाला पाहिजे तसा वेळ इथे बदलू शकता (उदा. 4000)
+        });
+        
     </script>
+
+    
 
 
     <script src="app.js"></script>
