@@ -1,6 +1,10 @@
+// =========================================================
+// water.js : वॉटर टँक, पंप आणि वाल्व्ह सिम्युलेशन
+// =========================================================
+
 // १. पंप ऑन/ऑफ करणे आणि लाईट इंडिकेटर चमकावणे
 function togglePump(pump, state) {
-    states[pump + '_pump'] = state;
+    states[pump + '_pump'] = state; // states ऑब्जेक्ट app.js मधून येतो
     
     document.getElementById(`light_${pump}_on`).classList.toggle('active', state);
     document.getElementById(`light_${pump}_off`).classList.toggle('active', !state);
@@ -22,9 +26,14 @@ function toggleValve(valve) {
     updateWaterFlowLogic();
 }
 
-// ३. वॉटर फ्लो आणि ॲनिमेशन मॅनेजमेंट (पायथन लॉजिकचे शुद्ध रूप)
+// ३. वॉटर फ्लो आणि ॲनिमेशन मॅनेजमेंट
 function updateWaterFlowLogic() {
-    states.sim_tanker = document.getElementById("simTanker").checked;
+    
+    // टँकरचा चेकबॉक्स तपासणे
+    const simTankerBox = document.getElementById("simTanker");
+    if(simTankerBox) {
+        states.sim_tanker = simTankerBox.checked;
+    }
     
     const anyPumpOn = states.ug_pump || states.bw1_pump || states.bw2_pump;
     const anyBorewellOn = states.bw1_pump || states.bw2_pump;
@@ -49,18 +58,21 @@ function updateWaterFlowLogic() {
     const ug_any_pouring = ug_bw_pouring || states.sim_tanker;
     toggleRipples("wave_ug", ug_any_pouring);
 
-    // गार्डन स्प्रिंकलर
+    // गार्डन स्प्रिंकलर (जेव्हा पंप ऑन असतो पण दोन्ही वाल्व्ह बंद असतात)
     const garden_active = states.ug_pump && !states.valve_t1 && !states.valve_t2;
     document.getElementById("stream_garden").style.display = garden_active ? "block" : "none";
 }
 
+// ४. पाण्याच्या लाटांचे ॲनिमेशन नियंत्रित करणे
 function toggleRipples(waveId, isPouring) {
     const wave = document.getElementById(waveId);
-    if (isPouring) {
-        wave.className = "wave-animated";
-        wave.style.display = "block";
-    } else {
-        wave.className = "wave-static";
-        wave.style.display = "block";
+    if(wave) {
+        if (isPouring) {
+            wave.className = "wave-animated";
+            wave.style.display = "block";
+        } else {
+            wave.className = "wave-static";
+            wave.style.display = "block";
+        }
     }
 }
