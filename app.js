@@ -1,3 +1,8 @@
+// ग्लोबल URL (सर्व मॉड्यूल्ससाठी)
+const GAS_URL = "https://script.google.com/macros/s/AKfycbzhRahy5y9o_ln7rkfkDsNy5HUao0wb1uajESoK5sh8Fo5wzCF9LRRqSk1rmENlXTihPA/exec"; 
+
+// ... तुमचे बाकीचे जुने app.js मधील लॉजिक (PWA Service Worker, Splash Screen) इथे राहू द्या ...
+
 // सिस्टीमचे मुख्य ग्लोबल स्टेट्स (Global Session States)
 var states = {
     ug_pump: false, 
