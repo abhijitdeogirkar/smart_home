@@ -346,7 +346,7 @@
 
                     // २. डॅशबोर्डवर अपडेट करणे (Null तपासणीसह)
                     liveSolarGen.innerText = (rawPower !== null) ? (rawPower / 1000).toFixed(2) + " kW" : "0.00 kW";
-                    todaySolarGen.innerText = (totalEnergy !== null) ? totalEnergy + " kWh" : "0.00 kWh";
+                    todaySolarGen.innerText = (totalEnergy / 1000).toFixed(1) + " kWh";
 
                     solarStatus.innerText = "🟢 सोलर डेटा अपडेट झाला (Live)";
                     solarStatus.style.color = "#2e7d32";
