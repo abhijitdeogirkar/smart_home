@@ -1,6 +1,6 @@
 {
   "name": "Abhiprajameyarnav Smart Home",
-  "short_name": "अभिप्राजमेयार्णव",
+  "short_name": "SmartHome",
   "description": "पाणी, ऊर्जा व सुरक्षा व्यवस्थापन प्रणाली",
   "start_url": "./index.html",
   "display": "standalone",
@@ -10,12 +10,14 @@
     {
       "src": "icon.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "icon.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
