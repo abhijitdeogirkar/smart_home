@@ -320,7 +320,7 @@
             }
         }
 
-        async function fetchSolarData(userPin) {
+       async function fetchSolarData(userPin) {
             const solarStatus = document.getElementById('solarStatus');
             const liveSolarGen = document.getElementById('liveSolarGen');
             const todaySolarGen = document.getElementById('todaySolarGen');
@@ -338,20 +338,21 @@
                 let result = await response.json();
                 
                 if (result.status === "success") {
-                    console.log("🔥 सोलर API चा कच्चा डेटा:", result.data);
+                    console.log("🔥 डेटा मिळाला:", result.data);
 
-                    // बदललेला कोड
-let currentPower = (result.data.generationPower / 1000).toFixed(2); // 600 Watts चे 0.60 kW करण्यासाठी
-let todayEnergy = result.data.generationTotal || "--";
+                    // १. थेट डेटा व्हेरिएबल्समध्ये घेणे
+                    let rawPower = result.data.generationPower; // ६००
+                    let totalEnergy = result.data.generationTotal; // ६९७१.६
 
-liveSolarGen.innerText = currentPower + " kW";
-todaySolarGen.innerText = todayEnergy + " kWh";
+                    // २. डॅशबोर्डवर अपडेट करणे (Null तपासणीसह)
+                    liveSolarGen.innerText = (rawPower !== null) ? (rawPower / 1000).toFixed(2) + " kW" : "0.00 kW";
+                    todaySolarGen.innerText = (totalEnergy !== null) ? totalEnergy + " kWh" : "0.00 kWh";
 
                     solarStatus.innerText = "🟢 सोलर डेटा अपडेट झाला (Live)";
                     solarStatus.style.color = "#2e7d32";
                 } else {
                     console.error("API Error:", result.message);
-                    solarStatus.innerText = "🔴 API एरर: डेटा मिळाला नाही";
+                    solarStatus.innerText = "🔴 API एरर";
                     solarStatus.style.color = "#d32f2f";
                 }
             } catch (error) {
