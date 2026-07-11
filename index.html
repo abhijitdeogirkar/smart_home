@@ -190,5 +190,78 @@
     <script src="panchang.js"></script>
     <script src="water.js"></script>
     <script src="security.js"></script>
+
+    <!-- =========================================================================
+         🚀 कस्टम PWA इन्स्टॉल पॉप-अप आणि पोस्ट-इन्स्टॉल स्क्रीन
+         ========================================================================= -->
+    
+    <!-- हाफ-स्क्रीन इन्स्टॉल पॉप-अप -->
+    <div id="installOverlay" class="install-overlay" style="display: none;">
+        <div class="install-card">
+            <img src="icon.png" alt="App Icon" class="install-icon">
+            <h3 class="install-title">अभिप्राजामेयार्णव ॲप</h3>
+            <p class="install-desc">जलद आणि सुरक्षित स्मार्ट होम नियंत्रणासाठी हे ॲप तुमच्या मोबाईलवर इन्स्टॉल करा.</p>
+            <button id="installBtn" class="install-btn">इन्स्टॉल करा</button>
+            <button id="closeInstallBtn" class="close-install-btn">नंतर करेन</button>
+        </div>
+    </div>
+
+    <!-- ॲप इन्स्टॉल झाल्यावर ब्राउझर ब्लॉक करणारी फुल-स्क्रीन -->
+    <div id="postInstallScreen" class="post-install-screen" style="display: none;">
+        <h1>✅ ॲप यशस्वीरीत्या इन्स्टॉल झाले!</h1>
+        <p>आता तुम्ही हा वेब ब्राउझर पूर्णपणे बंद करू शकता. पुढील सर्व नियंत्रणासाठी तुमच्या मोबाईलच्या मेनूमधील <b>'Abhiprajameyarnav'</b> ॲप उघडा.</p>
+        <button onclick="window.close()" class="close-browser-btn">हा ब्राउझर बंद करा</button>
+    </div>
+
+    <!-- PWA Service Worker & Custom Install Logic -->
+    <script>
+        // १. सर्व्हिस वर्कर जोडणे
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker Registered Successfully!'))
+                    .catch(err => console.error('Service Worker Error:', err));
+            });
+        }
+
+        // २. कस्टम इन्स्टॉल पॉप-अप लॉजिक
+        let deferredPrompt;
+        const installOverlay = document.getElementById('installOverlay');
+        const installBtn = document.getElementById('installBtn');
+        const closeInstallBtn = document.getElementById('closeInstallBtn');
+        const postInstallScreen = document.getElementById('postInstallScreen');
+
+        // गुगलचा डिफॉल्ट छोटा पॉप-अप ब्लॉक करून आपला मोठा पॉप-अप दाखवणे
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault(); // डिफॉल्ट पॉप-अप थांबवा
+            deferredPrompt = e; // इव्हेंट सेव्ह करा
+            installOverlay.style.display = 'flex'; // आपला मोठा पॉप-अप दाखवा
+        });
+
+        // इन्स्टॉल बटण दाबल्यावरची कृती
+        installBtn.addEventListener('click', async () => {
+            installOverlay.style.display = 'none';
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                deferredPrompt = null;
+            }
+        });
+
+        // नंतर बटण दाबल्यावर पॉप-अप बंद करणे
+        closeInstallBtn.addEventListener('click', () => {
+            installOverlay.style.display = 'none';
+        });
+
+        // ३. ॲप इन्स्टॉल झाल्यानंतरची कृती (ब्राउझर ब्लॉक करणे)
+        window.addEventListener('appinstalled', () => {
+            installOverlay.style.display = 'none';
+            // फुल-स्क्रीन 'सक्सेस' मेसेज दाखवा आणि ब्राउझरची टॅब ब्लॉक करा
+            postInstallScreen.style.display = 'flex';
+            
+            // काही ब्राउझर्समध्ये 'window.close()' थेट चालते, त्याचा प्रयत्न
+            setTimeout(() => { window.close(); }, 2000);
+        });
+    </script>
 </body>
 </html>
