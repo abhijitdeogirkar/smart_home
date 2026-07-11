@@ -340,11 +340,12 @@
                 if (result.status === "success") {
                     console.log("🔥 सोलर API चा कच्चा डेटा:", result.data);
 
-                    let currentPower = result.data.current_power || result.data.pac || "--";
-                    let todayEnergy = result.data.today_energy || result.data.e_today || "--";
+                    // बदललेला कोड
+let currentPower = (result.data.generationPower / 1000).toFixed(2); // 600 Watts चे 0.60 kW करण्यासाठी
+let todayEnergy = result.data.generationTotal || "--";
 
-                    liveSolarGen.innerText = currentPower + " kW";
-                    todaySolarGen.innerText = todayEnergy + " kWh";
+liveSolarGen.innerText = currentPower + " kW";
+todaySolarGen.innerText = todayEnergy + " kWh";
 
                     solarStatus.innerText = "🟢 सोलर डेटा अपडेट झाला (Live)";
                     solarStatus.style.color = "#2e7d32";
