@@ -198,3 +198,40 @@ body { background-color: #f0f2f5; color: #1e293b; padding-bottom: 40px; }
 .post-install-screen h1 { font-size: 28px; margin-bottom: 15px; color: #22c55e; }
 .post-install-screen p { font-size: 16px; color: #cbd5e1; line-height: 1.6; margin-bottom: 30px; }
 .close-browser-btn { background: #ef4444; color: white; border: none; padding: 16px 30px; border-radius: 16px; font-size: 18px; font-weight: bold; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4); cursor: pointer; }
+
+/* =========================================================================
+   🚀 कस्टम स्प्लॅश स्क्रीन (Custom Splash Screen)
+   ========================================================================= */
+.splash-screen {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #0f172a; /* ॲपच्या थीमशी मिळताजुळता रंग */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999; /* सर्व घटकांच्या वर राहण्यासाठी */
+    transition: opacity 0.5s ease-out; /* स्क्रीन स्मूथपणे गायब होण्यासाठी */
+}
+
+.splash-icon {
+    width: 160px;
+    height: 160px;
+    border-radius: 35px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    animation: pulseIcon 1.5s infinite alternate;
+}
+
+.splash-text {
+    color: #fde047; /* सोनेरी रंग */
+    margin-top: 25px;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+@keyframes pulseIcon {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
+}
